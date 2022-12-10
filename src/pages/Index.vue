@@ -2,25 +2,12 @@
   <div class="container">
     <h3>StarWars search</h3>
     <SearchBar @searchName="updateSearchName" :searchName="searchName" />
-    <!-- <q-input color=" primary" outlined v-model="searchName" label="Name" class="search-bar">
-      // <template v-slot:append>
-        // <span class="material-icons" style="color:#2FD17D; font-size: 1.5rem;">
-          // search
-          // </span>
-        // </template>
-      // </q-input> -->
     <div v-if="(charactersList.length === 0 && searchName.length === 0)">
       <p>Enter search phrase</p>
     </div>
     <div v-if="(charactersList.length > 0)">
       <div v-for="character in charactersList" :key="character.index" class="search-phrase">
         <FoundCharacters :characterName="character.name" :searchName="searchName" />
-        <!-- <q-field color="primary" outlined stack-label>
-          <template v-slot:control>
-            <div class="self-center full-width no-outline" tabindex="0" style="color:white"
-              v-html="highlightSearchedTerm(character.name, searchName)" />
-          </template>
-        </q-field> -->
       </div>
     </div>
     <div v-if="(charactersList.length === 0 && searchName.length > 0)">
