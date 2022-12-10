@@ -7,7 +7,7 @@
     </div>
     <div v-if="(charactersList.length > 0)">
       <div v-for="character in charactersList" :key="character.index" class="search-phrase">
-        <FoundCharacters :characterName="character.name" :searchName="searchName" />
+        <SearchPhrase :foundName="character.name" :searchName="searchName" />
       </div>
     </div>
     <div v-if="(charactersList.length === 0 && searchName.length > 0)">
@@ -22,13 +22,13 @@
 <script>
 import axios from 'axios'
 import SearchBar from 'src/components/SearchBar.vue'
-import FoundCharacters from 'src/components/FoundCharacters.vue'
+import SearchPhrase from 'src/components/SearchPhrase.vue'
 
 export default {
   name: 'PageIndex',
   components: {
     SearchBar,
-    FoundCharacters
+    SearchPhrase
   },
   data: () => {
     return {
@@ -42,8 +42,8 @@ export default {
     })
   },
   methods: {
-    updateSearchName(searchName) {
-      this.searchName = searchName
+    updateSearchName(value) {
+      this.searchName = value
     },
   },
   computed: {
@@ -51,7 +51,7 @@ export default {
       if (this.searchName.trim().length > 0) {
         return this.arrayOfCharacters.filter((hero) => hero.name.toLowerCase().includes(this.searchName.trim().toLowerCase()))
       }
-      return []
+      else { return [] }
     }
   }
 }
