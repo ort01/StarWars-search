@@ -1,16 +1,16 @@
 <template>
   <div class="container">
     <h3>StarWars search</h3>
-    <SearchBar @searchName="updateSearchName" :searchName="searchName" />
-    <div v-if="(charactersList.length === 0 && searchName.length === 0)">
+    <SearchBar @searchName="searchCharacters" :searchName="searchName" />
+    <div v-if="(arrayOfCharacters.length === 0 && searchName.length === 0)">
       <p>Enter search phrase</p>
     </div>
-    <div v-if="(charactersList.length > 0)">
-      <div v-for="character in charactersList" :key="character.index" class="search-phrase">
-        <SearchPhrase :foundName="character.name" :searchName="searchName" />
+    <div v-if="(arrayOfCharacters.length > 0)" style="margin-bottom: 150px">
+      <div v-for="character in arrayOfCharacters" :key="character.index">
+        <SearchPhrase :foundName="character.name" :searchName="searchName" class="search-phrase" />
       </div>
     </div>
-    <div v-if="(charactersList.length === 0 && searchName.length > 0)">
+    <div v-if="(arrayOfCharacters.length === 0 && searchName.length > 0)">
       <p>Nothing found</p>
     </div>
   </div>
@@ -36,24 +36,18 @@ export default {
       searchName: ''
     }
   },
-  mounted() {
-    axios.get(`https://swapi.py4e.com/api/people/`).then((res) => {
-      this.arrayOfCharacters = res.data.results
-    })
-  },
   methods: {
-    updateSearchName(value) {
-      this.searchName = value
-    },
-  },
-  computed: {
-    charactersList() {
-      if (this.searchName.trim().length > 0) {
-        return this.arrayOfCharacters.filter((hero) => hero.name.toLowerCase().includes(this.searchName.trim().toLowerCase()))
+    async searchCharacters(name) {
+      this.searchName = name
+      if (name.trim().length > 0) {
+        axios.get(`https://swapi.py4e.com/api/people/?search=${name}`).then((res) => {
+          this.arrayOfCharacters = res.data.results
+        })
+      } else {
+        this.arrayOfCharacters = []
       }
-      else { return [] }
     }
-  }
+  },
 }
 </script>
 
@@ -72,7 +66,8 @@ export default {
 .container h3 {
   font-weight: 300;
   display: block;
-  color: #2C3843
+  color: #2C3843;
+  cursor: default;
 }
 
 .container p {
@@ -80,10 +75,11 @@ export default {
 }
 
 .search-phrase {
-  width: 340px;
+  width: 345px;
   margin-bottom: 3px;
   background-color: #2C3843;
   color: white;
   border-radius: 4px;
+  cursor: pointer;
 }
 </style>

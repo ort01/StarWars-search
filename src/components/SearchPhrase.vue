@@ -19,7 +19,6 @@ export default {
     methods: {
         highlightSearchedTerm(foundName, searchName) {
             var searchRegularExpression = new RegExp(`(${searchName})`, 'gi');
-            // var nameWithHighlightedLetters = foundName.replace(new RegExp(`(${searchName})`, 'gi'), "<strong>$1</strong>")
             var nameWithHighlightedLetters = foundName.replace(searchRegularExpression, "<strong>$1</strong>")
             return nameWithHighlightedLetters;
         }

@@ -30,7 +30,7 @@ export default {
 
 <style>
 .search-bar {
-    width: 340px;
+    width: 345px;
     margin-bottom: 5px;
 }
 </style>
