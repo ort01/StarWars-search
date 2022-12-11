@@ -1,7 +1,8 @@
 <template>
   <div class="container">
-    <h3>StarWars search</h3>
-    <SearchBar @searchName="searchCharacters" :searchName="searchName" />
+    <h1>StarWars search</h1>
+    <SearchBar @searchName="searchCharacters" :searchName="searchName"
+      :arrayOfCharactersLength="arrayOfCharacters.length" />
     <div v-if="(arrayOfCharacters.length === 0 && searchName.length === 0)">
       <p>Enter search phrase</p>
     </div>
@@ -14,7 +15,6 @@
       <p>Nothing found</p>
     </div>
   </div>
-
 </template>
 
 
@@ -33,14 +33,15 @@ export default {
   data: () => {
     return {
       arrayOfCharacters: [],
-      searchName: ''
+      searchName: '',
+
     }
   },
   methods: {
-    async searchCharacters(name) {
-      this.searchName = name
-      if (name.trim().length > 0) {
-        axios.get(`https://swapi.py4e.com/api/people/?search=${name}`).then((res) => {
+    async searchCharacters(value) {
+      this.searchName = value
+      if (value.trim().length > 0) {
+        axios.get(`https://swapi.py4e.com/api/people/?search=${value}`).then((res) => {
           this.arrayOfCharacters = res.data.results
         })
       } else {
@@ -68,8 +69,10 @@ body {
   flex-direction: column;
 }
 
-.container h3 {
+.container h1 {
+  font-size: 3rem;
   font-weight: 300;
+  margin-bottom: 18px;
   display: block;
   color: #2C3843;
   cursor: default;
