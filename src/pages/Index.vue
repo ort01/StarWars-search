@@ -7,7 +7,7 @@
     </div>
     <div v-if="(arrayOfCharacters.length > 0)" style="margin-bottom: 150px">
       <div v-for="character in arrayOfCharacters" :key="character.index">
-        <SearchPhrase :foundName="character.name" :searchName="searchName" class="search-phrase" />
+        <SearchedPhrase :foundName="character.name" :searchName="searchName" />
       </div>
     </div>
     <div v-if="(arrayOfCharacters.length === 0 && searchName.length > 0)">
@@ -22,13 +22,13 @@
 <script>
 import axios from 'axios'
 import SearchBar from 'src/components/SearchBar.vue'
-import SearchPhrase from 'src/components/SearchPhrase.vue'
+import SearchedPhrase from 'src/components/SearchPhrase.vue'
 
 export default {
   name: 'PageIndex',
   components: {
     SearchBar,
-    SearchPhrase
+    SearchedPhrase
   },
   data: () => {
     return {
@@ -55,6 +55,11 @@ export default {
 
 
 <style>
+body {
+  height: 100vh;
+  margin: 0;
+}
+
 .container {
   margin: auto;
   display: flex;
@@ -72,14 +77,5 @@ export default {
 
 .container p {
   font-size: 0.7rem;
-}
-
-.search-phrase {
-  width: 345px;
-  margin-bottom: 3px;
-  background-color: #2C3843;
-  color: white;
-  border-radius: 4px;
-  cursor: pointer;
 }
 </style>
